@@ -10,6 +10,11 @@
 #    you have created a soft link for the executable in this directory. For example - Script file to run phpstorm was
 #    /usr/local/PHPStorm-141/bin/phpstorm.sh, so i create a sym link using following command:
 #    ln -s /usr/local/PHPStorm-141/bin/phpstorm.sh /usr/bin/phpstormlink
+# 3) Add this file to /usr/bin/ or usr/local/bin/, I went for /usr/bin/ and make it executable using
+#    chmod +x startupApplication.sh
+# 4) In Ubuntu, search for "Startup Application" application and click on "Add" button.
+# 5) Write the name than click on browse and search for /usr/bin/startupApplication.sh or /usr/local/bin/startupApplication.sh
+#    where ever you have saved your script file and hit "Add"
 
 DATE=$(date)
 DAY=$(date +%a)
