@@ -22,17 +22,17 @@ then
     if [ $CURRENTHOUR -eq 9 ]
     then
         #run all the application related to work
-        yakuake || echo "Not able to load yakuake when the system started on $DATE\n"
+        yakuake || echo "Not able to load yakuake when the system started on $DATE\n" > $LOGFILE
         sleep 2
-        google-chrome || echo "Not able to load google chrome when the system started on $DATE\n"
+        google-chrome || echo "Not able to load google chrome when the system started on $DATE\n" > $LOGFILE
         sleep 2
-        scudcloud || echo "Not able to load scudcloud when the system started on $DATE\n"
+        scudcloud || echo "Not able to load scudcloud when the system started on $DATE\n" > $LOGFILE
         sleep 2
-        skype || echo "Not able to load skype when the system started on $DATE\n"
+        skype || echo "Not able to load skype when the system started on $DATE\n" > $LOGFILE
         sleep 2
-        thunderbird || echo "Not able to load thunderbird when the system started on $DATE\n"
+        thunderbird || echo "Not able to load thunderbird when the system started on $DATE\n" > $LOGFILE
         sleep 2
-        phpstormlink || echo "Not able to load phpstorm when the system started on $DATE\n"
+        phpstormlink || echo "Not able to load phpstorm when the system started on $DATE\n" > $LOGFILE
         sleep 2
     fi
 fi
