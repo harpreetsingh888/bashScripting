@@ -18,8 +18,8 @@
 
 DATE=$(date)
 DAY=$(date +%a)
-CURRENTHOUR=$(date +%k%M)
-CURRENTMINUTE=$(date +%k%M)
+CURRENTHOUR=$(date +%k)
+CURRENTMINUTE=$(date +%M)
 LOGFILE=/home/harpreet/startupApplicationlog.txt
 
 if [ $DAY!=Sat ] && [ $DAY!=Sun ]
