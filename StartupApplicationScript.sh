@@ -22,7 +22,7 @@ CURRENTHOUR=$(date +%k%M)
 CURRENTMINUTE=$(date +%k%M)
 LOGFILE=/home/harpreet/startupApplicationlog.txt
 
-if [ $DAY -ne 'Sat' ] || [ $DAY -ne 'Sun' ]
+if [ $DAY -ne 'Sat' ] && [ $DAY -ne 'Sun' ]
 then
     if [ $CURRENTHOUR -eq 9 ]
     then
