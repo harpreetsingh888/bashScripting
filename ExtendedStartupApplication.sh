@@ -26,10 +26,11 @@ declare -a CHECKAPPLICATIONS=('yakuake' 'google-chrome' 'scudcloud' 'skype' 'php
 declare -a RUNAPPLICATIONS=()
 APPLICATIONS=''
 
-#function
+#add applications based on if we want to run the apps or just check it
 function populateRunApplications()
 {
 	eval argument="$1"
+	#check current applications
 	if [ argument="check" ]
 	then
 		pos=$(( ${#CHECKAPPLICATIONS[*]} - 1 ))
@@ -44,6 +45,7 @@ function populateRunApplications()
 		      fi
 		done
 	else
+	#run current applications
 		pos=$(( ${#RUNAPPLICATIONS[*]} - 1 ))
 		last=${RUNAPPLICATIONS[$pos]}
 
