@@ -26,40 +26,90 @@ declare -a CHECKAPPLICATIONS=('yakuake' 'google-chrome' 'scudcloud' 'skype' 'php
 declare -a RUNAPPLICATIONS=()
 APPLICATIONS=''
 
+#function
+function populateRunApplications()
+{
+	eval argument="$1"
+	if [ argument="check" ]
+	then
+		pos=$(( ${#CHECKAPPLICATIONS[*]} - 1 ))
+		last=${CHECKAPPLICATIONS[$pos]}
+		#Construct a string consisting of all the applications to run
+		for j in ${CHECKAPPLICATIONS[@]}; do
+		      if [[ $j == $last ]]
+		      then
+			 APPLICATIONS="$APPLICATIONS$j"
+		      else
+			 APPLICATIONS="$APPLICATIONS$j & "
+		      fi
+		done
+	else
+		pos=$(( ${#RUNAPPLICATIONS[*]} - 1 ))
+		last=${RUNAPPLICATIONS[$pos]}
+
+		#Construct a string consisting of all the applications to run
+		for j in ${RUNAPPLICATIONS[@]}; do
+		      if [[ $j == $last ]]
+		      then
+			 APPLICATIONS="$APPLICATIONS$j"
+		      else
+			 APPLICATIONS="$APPLICATIONS$j & "
+		      fi
+		done
+	fi	
+}
+
 #Only Weekdays
 if [ $DAY!=Sat ] && [ $DAY!=Sun ];
 then
-    #8am or 9am
-    if [ $CURRENTHOUR -eq 8 ] || [ $CURRENTHOUR -eq 9 ]
+
+    #no argument supplied
+    if [ "$#" -eq 0 ]
     then
-        #Check if each application is running or not
-        for i in ${!CHECKAPPLICATIONS[@]}; do
-            OUTPUT=$(pgrep -n '$i')
+  	#8am or 9am
+	    if [ $CURRENTHOUR -eq 8 ] || [ $CURRENTHOUR -eq 9 ]
+	    then
+		#Check if each application is running or not
+		for i in ${!CHECKAPPLICATIONS[@]}; do
+		    OUTPUT=$(pgrep -n '$i')
 
-            #if not than all it to an array to run it later on
-            if [ -z "$OUTPUT" ];
-            then
-                CURRENTAPP="${CHECKAPPLICATIONS[$i]}"
-                RUNAPPLICATIONS+=($CURRENTAPP)
-            fi
-        done
+		    #if not than all it to an array to run it later on
+		    if [ -z "$OUTPUT" ];
+		    then
+			CURRENTAPP="${CHECKAPPLICATIONS[$i]}"
+			RUNAPPLICATIONS+=($CURRENTAPP)
+		    fi
+		done
+		
+		populateRunApplications
+	
+		#Run applications
+		eval $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
+	    fi
+    else
+	#check argument
+	case "$1" in
+	-all)
+		populateRunApplications check
+	
+		#Run applications
+		eval $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
+	;;
+	-currentapps)
+		populateRunApplications check
+		
+		echo -e $APPLICATIONS
+	;;
+	-help)
+	echo "USAGE"
+	echo -e "-all\tRuns all the applications."
 
-        pos=$(( ${#RUNAPPLICATIONS[*]} - 1 ))
-        last=${RUNAPPLICATIONS[$pos]}
+	;;
+	*)
+	echo -e "Supply a valid option."
 
-        #Construct a string consisting of all the applications to run
-        for j in ${RUNAPPLICATIONS[@]}; do
-              if [[ $j == $last ]]
-              then
-                 APPLICATIONS="$APPLICATIONS$j"
-              else
-                 APPLICATIONS="$APPLICATIONS$j & "
-              fi
-        done
-        
-        #Run applications
-        eval $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
-    fi
+	esac	
+    fi    
 else
 exit
 fi
