@@ -21,8 +21,7 @@ DAY=$(date +%a)
 CURRENTHOUR=$(date +%k)
 CURRENTMINUTE=$(date +%M)
 LOGFILE=/home/harpreet/startupApplicationlog.txt
-#declare -a applications=('yakuake' 'google-chrome' 'scudcloud' 'skype' 'thunderbird' 'phpstormlink')
-declare -a CHECKAPPLICATIONS=("thunderbird" "skype")
+declare -a CHECKAPPLICATIONS=('yakuake' 'google-chrome' 'scudcloud' 'skype' 'phpstormlink' 'thunderbird')
 declare -a RUNAPPLICATIONS=()
 APPLICATIONS=''
 
@@ -51,7 +50,7 @@ then
                  APPLICATIONS="$APPLICATIONS$j & "
               fi
         done
-        $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
+        eval $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
     fi
 else
 exit
