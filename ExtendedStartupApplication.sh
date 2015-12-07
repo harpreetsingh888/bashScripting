@@ -27,7 +27,7 @@ declare -a RUNAPPLICATIONS=()
 APPLICATIONS=''
 
 #add applications based on if we want to run the apps or just check it
-function populateRunApplications()
+function populateApplications()
 {
 	eval argument="$1"
 	#check current applications
@@ -83,7 +83,7 @@ then
 		    fi
 		done
 		
-		populateRunApplications
+		populateApplications run
 	
 		#Run applications
 		eval $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
@@ -92,13 +92,13 @@ then
 	#check argument
 	case "$1" in
 	-all)
-		populateRunApplications check
+		populateApplications check
 	
 		#Run applications
 		eval $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
 	;;
 	-currentapps)
-		populateRunApplications check
+		populateApplications check
 		
 		echo -e $APPLICATIONS
 	;;
