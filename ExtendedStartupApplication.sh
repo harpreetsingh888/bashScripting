@@ -103,12 +103,12 @@ then
 		echo -e $APPLICATIONS
 	;;
 	-help)
-	echo "USAGE"
-	echo -e "-all\tRuns all the applications."
-
+		echo "USAGE"
+		echo -e "-all\tRuns all the applications."
 	;;
+	
 	*)
-	echo -e "Supply a valid option."
+		echo -e "Supply a valid option."
 
 	esac	
     fi    
