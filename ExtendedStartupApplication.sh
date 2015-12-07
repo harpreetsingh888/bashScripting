@@ -35,7 +35,7 @@ function populateApplications()
 	then
 		pos=$(( ${#CHECKAPPLICATIONS[*]} - 1 ))
 		last=${CHECKAPPLICATIONS[$pos]}
-		#Construct a string consisting of all the applications to run
+		#Construct a string consisting of all the applications
 		for j in ${CHECKAPPLICATIONS[@]}; do
 		      if [[ $j == $last ]]
 		      then
