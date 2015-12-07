@@ -16,6 +16,7 @@
 # 5) Write the name than click on browse and search for /usr/bin/startupApplication.sh or /usr/local/bin/startupApplication.sh
 #    where ever you have saved your script file and hit "Add"
 
+#Variables
 DATE=$(date)
 DAY=$(date +%a)
 CURRENTHOUR=$(date +%k)
@@ -25,13 +26,17 @@ declare -a CHECKAPPLICATIONS=('yakuake' 'google-chrome' 'scudcloud' 'skype' 'php
 declare -a RUNAPPLICATIONS=()
 APPLICATIONS=''
 
+#Only Weekdays
 if [ $DAY!=Sat ] && [ $DAY!=Sun ];
 then
-    if [ $CURRENTHOUR -gt 0 ]
+    #8am or 9am
+    if [ $CURRENTHOUR -eq 8 ] || [ $CURRENTHOUR -eq 9 ]
     then
+        #Check if each application is running or not
         for i in ${!CHECKAPPLICATIONS[@]}; do
             OUTPUT=$(pgrep -n '$i')
 
+            #if not than all it to an array to run it later on
             if [ -z "$OUTPUT" ];
             then
                 CURRENTAPP="${CHECKAPPLICATIONS[$i]}"
@@ -42,6 +47,7 @@ then
         pos=$(( ${#RUNAPPLICATIONS[*]} - 1 ))
         last=${RUNAPPLICATIONS[$pos]}
 
+        #Construct a string consisting of all the applications to run
         for j in ${RUNAPPLICATIONS[@]}; do
               if [[ $j == $last ]]
               then
@@ -50,6 +56,8 @@ then
                  APPLICATIONS="$APPLICATIONS$j & "
               fi
         done
+        
+        #Run applications
         eval $APPLICATIONS || echo "Not able to load applications when the system started on $DATE\n" > $LOGFILE
     fi
 else
